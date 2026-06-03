@@ -1,0 +1,586 @@
+main.cpp 
+#include<iostream>
+#include<cctype>
+#include<string>
+#include<fstream>
+
+using namespace std;
+void studentData();
+void menu();
+void desiredFieldFSCmedical(); //the main fields from which the subfields will be recommended
+void desiredFieldICS();  //the main field from which the subfields will be recommended
+void desiredFieldFA();
+void intermediateMarks();
+void aptitudeTest();
+char getValidAnswer();
+void totalPercentage();
+void saveData(string recommendedField, float highest);
+void viewPreviousData();
+string name;
+int medicalScore = 0;
+int technologyScore = 0;
+int businessScore = 0;
+int educationScore = 0;
+int totalMarks;
+int obtainedMarks;
+int field;
+double highest = 0.0;
+string recommendedField;
+int main() {
+	cout << "*************************************************" << endl;
+	cout << "---------CAREER COUNSELLING PROGRAM---------" << endl;
+	cout << "***************************************************" << endl;
+	cout << "Hi, I am here to help you to choose your career. Do you want to proceed?";
+	cout << endl << " yes                 exit" << endl;
+	string option;  //here variable is declared to hold user will
+	cin >> option;
+	char previous;
+	if (option == "yes" || option == "YES" || option == "Yes") {
+		studentData();
+		menu();
+		intermediateMarks();
+		aptitudeTest();
+		totalPercentage();
+		cout << "Do you want to see previous data which you have entered?" << endl;
+		cout << "Y = Yes, N = No" << endl;
+		cin >> previous;
+
+		previous = toupper(previous);
+
+		if (previous == 'Y') {
+			viewPreviousData();
+		}
+	}
+	else {
+		cout << endl << "Program terminated" << endl;
+	}
+	return 0;
+}
+void studentData() {
+	cout << endl << "give me the answers of the following questions:" << endl;
+	cout << "What is your name?" << endl;
+	cin.ignore();
+	getline(cin, name);
+}
+void menu() {
+	cout << "In which feild have you done intermediate?" << endl;
+	cout << "1 for ICS,2 for Pre-Medical,3 for Pre-Engineering, 4 for FA" << endl;
+	cout << "1. ICS" << endl;
+	cout << "2. FSC Pre-Medical" << endl;
+	cout << "3. FSC Pre-Engineering" << endl;
+	cout << "4. FA" << endl;
+	cin >> field;
+	if (field == 2)
+		desiredFieldFSCmedical();
+	else if (field == 1 || field == 3)
+		desiredFieldICS();
+	else if (field == 4)
+		desiredFieldFA();
+}
+void desiredFieldFSCmedical() {
+	cout << "I will check your potential for the following fields" << endl;
+	cout << "1.Medical and Health sciences" << endl;
+	cout << "2.Technology" << endl;
+	cout << "3.Business and Commerce" << endl;
+	cout << "4.Education and Teaching" << endl;
+	
+}
+void desiredFieldICS() {  //the main fields for both ICS and Pre-engineering
+	cout << "I will check your potential for the following fields" << endl;
+	cout << "1. Technology" << endl;
+	cout << "3. Business and Commerce" << endl;
+	cout << "4. Education and Teaching" << endl;
+}
+void desiredFieldFA() {
+	cout << "I will check your potential for the following fields" << endl;
+	cout << "Technology" << endl;
+	cout << "Business and Commerce" << endl;
+	cout << "SocialSciences" << endl;
+}
+void intermediateMarks() {
+	do {
+		cout << "Enter your total Intermediate marks:" << endl;
+		cin >> totalMarks;
+		cout << "Enter your intermediate marks that you have obtained:" << endl;
+		cin >> obtainedMarks;
+		if (obtainedMarks<0 || obtainedMarks>totalMarks || totalMarks <= 0)
+			cout << "Please enter valid marks:" << endl;
+	} while (obtainedMarks<0 || obtainedMarks>totalMarks || totalMarks <= 0);
+}
+void aptitudeTest() {
+	cout << "Answer the following questions." << endl;
+	cout << "\nQ1. Which activity would you enjoy the most?" << endl;
+	cout << "A. Helping patients in a hospital" << endl;
+	cout << "B. Developing a mobile application" << endl;
+	cout << "C. Running your own business" << endl;
+	cout << "D. Teaching students in a classroom" << endl;
+
+	char answer = getValidAnswer();
+
+	switch (answer)
+	{
+	case 'A':
+		medicalScore += 5;
+		break;
+	case 'B': 
+		technologyScore += 5;
+		break;
+	case 'C':
+		businessScore += 5;
+		break;
+	case 'D':
+		educationScore += 5; 
+		break;
+	}
+	cout << "\nQ2. Which subject interests you the most?" << endl;
+	cout << "A. Biology" << endl;
+	cout << "B. Computer Science" << endl;
+	cout << "C. Accounting" << endl;
+	cout << "D. English" << endl;
+
+	answer = getValidAnswer();
+
+	switch (answer)
+	{
+	case 'A': 
+		medicalScore += 5;
+		break;
+	case 'B':
+		technologyScore += 5;
+		break;
+	case 'C': 
+		businessScore += 5; 
+		break;
+	case 'D':
+		educationScore += 5;
+		break;
+	}
+	cout << "\nQ3. What type of problem do you enjoy solving?" << endl;
+	cout << "A. Health-related issues" << endl;
+	cout << "B. Technical and logical problems" << endl;
+	cout << "C. Financial and business problems" << endl;
+	cout << "D. Learning and communication problems" << endl;
+
+	answer = getValidAnswer();
+
+	switch (answer)
+	{
+	case 'A':
+		medicalScore += 5;
+		break;
+	case 'B': 
+		technologyScore += 5;
+		break;
+	case 'C':
+		businessScore += 5;
+		break;
+	case 'D':
+		educationScore += 5;
+		break;
+	}
+	cout << "\nQ4. Which achievement would make you happiest?" << endl;
+	cout << "A. Saving a person's life" << endl;
+	cout << "B. Creating useful software" << endl;
+	cout << "C. Building a successful company" << endl;
+	cout << "D. Helping students succeed" << endl;
+
+	answer = getValidAnswer();
+
+	switch (answer)
+	{
+	case 'A':
+		medicalScore += 5;
+		break;
+	case 'B':
+		technologyScore += 5;
+		break;
+	case 'C': 
+		businessScore += 5;
+		break;
+	case 'D':
+		educationScore += 5;
+		break;
+	}
+	cout << "\nQ5. Which work environment do you prefer?" << endl;
+	cout << "A. Hospital or clinic" << endl;
+	cout << "B. Software house or tech company" << endl;
+	cout << "C. Corporate office or business firm" << endl;
+	cout << "D. School, college or university" << endl;
+
+	answer = getValidAnswer();
+
+	switch (answer)
+	{
+	case 'A':
+		medicalScore += 5;
+		break;
+	case 'B':
+		technologyScore += 5;
+		break;
+	case 'C':
+		businessScore += 5;
+		break;
+	case 'D':
+		educationScore += 5; 
+		break;
+	}
+	cout << "\nQ6. Which task would you prefer to do?" << endl;
+	cout << "A. Diagnosing a patient's illness" << endl;
+	cout << "B. Designing a computer system" << endl;
+	cout << "C. Planning a marketing campaign" << endl;
+	cout << "D. Preparing a lesson for students" << endl;
+
+	answer = getValidAnswer();
+
+	switch (answer)
+	{
+	case 'A':
+		medicalScore += 5;
+		break;
+	case 'B': 
+		technologyScore += 5;
+		break;
+	case 'C':
+		businessScore += 5;
+		break;
+	case 'D':
+		educationScore += 5;
+		break;
+	}
+	cout << "\nQ7. What motivates you the most?" << endl;
+	cout << "A. Improving people's health" << endl;
+	cout << "B. Creating innovative technology" << endl;
+	cout << "C. Achieving financial success" << endl;
+	cout << "D. Sharing knowledge with others" << endl;
+
+	answer = getValidAnswer();
+
+	switch (answer)
+	{
+	case 'A':
+		medicalScore += 5; 
+		break;
+	case 'B':
+		technologyScore += 5;
+		break;
+	case 'C': 
+		businessScore += 5;
+		break;
+	case 'D':
+		educationScore += 5;
+		break;
+	}
+	cout << "\nQ8. Which type of book would you most likely read?" << endl;
+	cout << "A. Human Anatomy or Health" << endl;
+	cout << "B. Programming or Artificial Intelligence" << endl;
+	cout << "C. Entrepreneurship or Finance" << endl;
+	cout << "D. Psychology or Education" << endl;
+
+	answer = getValidAnswer();
+
+	switch (answer)
+	{
+	case 'A':
+		medicalScore += 5;
+		break;
+	case 'B': 
+		technologyScore += 5;
+		break;
+	case 'C':
+		businessScore += 5;
+		break;
+	case 'D': 
+		educationScore += 5;
+		break;
+	}
+	cout << "\nQ9. In a group project, what role would you choose?" << endl;
+	cout << "A. Researching scientific information" << endl;
+	cout << "B. Handling technical work" << endl;
+	cout << "C. Managing the team and resources" << endl;
+	cout << "D. Explaining ideas to everyone" << endl;
+
+	answer = getValidAnswer();
+
+	switch (answer)
+	{
+	case 'A':
+		medicalScore += 5;
+		break;
+	case 'B':
+		technologyScore += 5;
+		break;
+	case 'C':
+		businessScore += 5;
+		break;
+	case 'D':
+		educationScore += 5;
+		break;
+	}
+	cout << "\nQ10. Which career would you choose if all paid equally?" << endl;
+	cout << "A. Doctor" << endl;
+	cout << "B. Software Engineer" << endl;
+	cout << "C. Business Executive" << endl;
+	cout << "D. Teacher" << endl;
+
+	answer = getValidAnswer();
+
+	switch (answer)
+	{
+	case 'A':
+		medicalScore += 5;
+		break;
+	case 'B':
+		technologyScore += 5;
+		break;
+	case 'C':
+		businessScore += 5;
+		break;
+	case 'D':
+		educationScore += 5; 
+		break;
+	}
+	cout << "\nMedical Score: " << medicalScore << endl;
+	cout << "Technology Score: " << technologyScore << endl;
+	cout << "Business Score: " << businessScore << endl;
+	cout << "Education Score: " << educationScore << endl;
+
+}
+char getValidAnswer()
+{
+	char answer;
+
+	do
+	{
+		cout << "Enter your answer (A, B, C or D): ";
+		cin >> answer;
+
+		answer = toupper(answer);
+
+		if (answer != 'A' && answer != 'B' &&
+			answer != 'C' && answer != 'D')
+		{
+			cout << "Invalid input. Please enter A, B, C or D." << endl;
+		}
+
+	} while (answer != 'A' && answer != 'B' &&
+		answer != 'C' && answer != 'D');
+
+	return answer;
+}
+void totalPercentage() {
+
+	float interPercentage = (obtainedMarks * 50.0) / totalMarks;
+	float medicalPercentage = (medicalScore * 50.0) / 50;
+	float technologyPercentage = (technologyScore * 50.0) / 50;
+	float businessPercentage = (businessScore * 50.0) / 50;
+	float educationPercentage = (educationScore * 50.0) / 50;
+	float medical = interPercentage + medicalPercentage;
+	float technology = interPercentage + technologyPercentage;
+	float business = interPercentage + businessPercentage;
+	float education = interPercentage + educationPercentage;
+	cout << "Inter Percentage + aptitude test percentage for Medical:              " << interPercentage << " + " << medicalPercentage << " =  ";
+	cout	<< interPercentage + medicalPercentage <<"%" << endl;
+		cout << "Inter Percentage + aptitude test percentage for Technology:   " << interPercentage << " + " << technologyPercentage << " =  ";
+		cout<< interPercentage + technologyPercentage<<"%" << endl;
+		cout << "Inter Percentage + aptitude test percentage for Business:     " << interPercentage << " + " << businessPercentage << " =  ";
+		cout<< interPercentage + businessPercentage<<"%" << endl;
+		cout << "Inter Percentage + aptitude test percentage for Education:    " << interPercentage << " + " << educationPercentage << " =  ";
+		cout<< interPercentage + educationPercentage<<"%" << endl;
+	cout << endl << endl;
+
+	if (field == 2)   // FSC Pre-Medical
+	{
+		highest = medical;
+		recommendedField = "Medical and Health Sciences";
+
+		if (technology > highest)
+		{
+			highest = technology;
+			recommendedField = "Technology";
+		}
+
+		if (business > highest)
+		{
+			highest = business;
+			recommendedField = "Business and Commerce";
+		}
+
+		if (education > highest)
+		{
+			highest = education;
+			recommendedField = "Education and Teaching";
+		}
+	}
+	else if (field == 1 || field == 3)   // ICS or Pre-Engineering
+	{
+		highest = technology;
+		recommendedField = "Technology";
+
+		if (business > highest)
+		{
+			highest = business;
+			recommendedField = "Business and Commerce";
+		}
+
+		if (education > highest)
+		{
+			highest = education;
+			recommendedField = "Education and Teaching";
+		}
+	}
+	else if (field == 4)   // FA
+	{
+		highest = business;
+		recommendedField = "Business and Commerce";
+
+		if (education > highest)
+		{
+			highest = education;
+			recommendedField = "Education and Teaching";
+		}
+	}
+	cout << endl << endl;
+	cout << "highest score: " <<highest<<"%" << endl;
+	cout << "Recommended field: " << recommendedField << endl;
+	if (recommendedField == "Medical and Health Sciences")
+	{
+		cout << "\nRecommended Subfields:" << endl;
+		cout << "- MBBS" << endl;
+		cout << "- BDS" << endl;
+		cout << "- Doctor of Physical Therapy (DPT)" << endl;
+		cout << "- Pharmacy" << endl;
+		cout << "- Nursing" << endl;
+	}
+	else if (recommendedField == "Technology")
+	{
+		cout << "\nRecommended Subfields:" << endl;
+		cout << "- Software Engineering" << endl;
+		cout << "- Computer Science" << endl;
+		cout << "- Artificial Intelligence" << endl;
+		cout << "- Cyber Security" << endl;
+		cout << "- Data Science" << endl;
+	}
+	else if (recommendedField == "Business and Commerce")
+	{
+		cout << "\nRecommended Subfields:" << endl;
+		cout << "- BBA" << endl;
+		cout << "- Accounting and Finance" << endl;
+		cout << "- Marketing" << endl;
+		cout << "- Human Resource Management" << endl;
+		cout << "- Economics" << endl;
+	}
+	else
+	{
+		cout << "\nRecommended Subfields:" << endl;
+		cout << "- Education" << endl;
+		cout << "- English" << endl;
+		cout << "- Mathematics" << endl;
+		cout << "- Educational Leadership" << endl;
+		cout << "- Psychology" << endl;
+	}
+	if (recommendedField == "Medical and Health Sciences")
+	{
+		cout << "\nRecommended Universities:" << endl;
+		cout << "1. King Edward Medical University (Lahore)" << endl;
+		cout << "2. Dow University of Health Sciences (Karachi)" << endl;
+		cout << "3. Army Medical College (Rawalpindi)" << endl;
+		cout << "4. Khyber Medical University (Peshawar)" << endl;
+		cout << "5. University of Health Sciences (Lahore)" << endl;
+
+		cout << "\nRecommended Degree Programs:" << endl;
+		cout << "- MBBS" << endl;
+		cout << "- BDS" << endl;
+		cout << "- Doctor of Physical Therapy (DPT)" << endl;
+		cout << "- Pharmacy" << endl;
+		cout << "- Nursing" << endl;
+	}
+	else if (recommendedField == "Technology")
+	{
+		cout << "\nRecommended Universities:" << endl;
+		cout << "1. NUST (Islamabad)" << endl;
+		cout << "2. FAST-NUCES" << endl;
+		cout << "3. COMSATS University Islamabad" << endl;
+		cout << "4. UET Lahore" << endl;
+		cout << "5. GIKI" << endl;
+
+		cout << "\nRecommended Degree Programs:" << endl;
+		cout << "- Computer Science" << endl;
+		cout << "- Software Engineering" << endl;
+		cout << "- Artificial Intelligence" << endl;
+		cout << "- Cyber Security" << endl;
+		cout << "- Data Science" << endl;
+	}
+	else if (recommendedField == "Business and Commerce")
+	{
+		cout << "\nRecommended Universities:" << endl;
+		cout << "1. LUMS" << endl;
+		cout << "2. IBA Karachi" << endl;
+		cout << "3. COMSATS University Islamabad" << endl;
+		cout << "4. Quaid-e-Azam University" << endl;
+		cout << "5. University of the Punjab" << endl;
+
+		cout << "\nRecommended Degree Programs:" << endl;
+		cout << "- BBA" << endl;
+		cout << "- Accounting and Finance" << endl;
+		cout << "- Marketing" << endl;
+		cout << "- Human Resource Management" << endl;
+		cout << "- Economics" << endl;
+	}
+	else if (recommendedField == "Education and Teaching")
+	{
+		cout << "\nRecommended Universities:" << endl;
+		cout << "1. Allama Iqbal Open University" << endl;
+		cout << "2. International Islamic University Islamabad" << endl;
+		cout << "3. University of the Punjab" << endl;
+		cout << "4. University of Education Lahore" << endl;
+		cout << "5. Quaid-e-Azam University" << endl;
+
+		cout << "\nRecommended Degree Programs:" << endl;
+		cout << "- Education" << endl;
+		cout << "- English" << endl;
+		cout << "- Mathematics" << endl;
+		cout << "- Psychology" << endl;
+		cout << "- Educational Leadership" << endl;
+	}
+	saveData(recommendedField, highest);
+}
+void saveData(string recommendedField, float highest) {
+	ofstream  fout("StudentrecordData.txt", ios::app);
+	if (!fout) {
+		cout << "There is no file found!";
+		return;
+	}
+	fout << "-------------------------------------------" << endl;
+	fout << "Career Counselling Student Data" << endl;
+	fout << "-------------------------------------------" << endl << endl;
+	fout << "Name: " << name << endl;
+	fout << "Intermediate Marks: " << endl;
+	fout << "Total Marks: " << totalMarks << endl;
+	fout << "Obtained Marks: " << obtainedMarks << endl << endl;
+	fout << "Medical Score: " << medicalScore << endl;
+	fout << "Technology Score: " << technologyScore << endl;
+	fout << "Business Score : " << businessScore << endl;
+	fout << "Education Score: " << educationScore << endl;
+	fout << endl << endl;
+	fout << "Highest Score: " << highest << endl;
+	fout << "Recommended Field: ";
+	fout << recommendedField << endl;
+	fout << "--------------------------------------------------" << endl;
+	fout.close();
+	cout << "File is saved succesfully." << endl;
+}
+void viewPreviousData() {
+	ifstream fin("StudentrecordData.txt");
+	if (!fin) {
+		cout << "file is not found." << endl;
+		return;
+	}
+	string data;
+	while (getline(fin, data)) {
+		cout << data << endl;
+	}
+	fin.close();
+
+}
+
+	
